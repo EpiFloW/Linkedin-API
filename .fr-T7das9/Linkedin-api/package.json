@@ -1,0 +1,22 @@
+{
+  "name": "linkedin-api",
+  "version": "1.0.0",
+  "description": "Linkedin API",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/Flowstoo/linkedin-api.git"
+  },
+  "author": "Florian Maisonnave",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/Flowstoo/linkedin-api/issues"
+  },
+  "homepage": "https://gitlab.com/Flowstoo/linkedin-api#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
