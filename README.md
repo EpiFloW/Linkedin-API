@@ -35,7 +35,7 @@ Créer trois bases de donnée en local :
 
 ```shell script
 npm install
-sequelize db:migration
+sequelize db:migrate
 ```
 
 # API Documentation
