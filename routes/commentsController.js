@@ -111,5 +111,38 @@ module.exports = {
         return res.status(500).json({'error':'cannot update comment'});
       }
     });
+  },
+
+  getComments: function(req, res){
+    var fields = req.query.fields;
+    var limit = parseInt(req.query.limit);
+    var offset = parseInt(req.query.offset);
+    var order = req.query.order;
+    var search = req.query.search;
+
+    if (search == null){
+      models.Comment.findAll({
+        order: [(order != null) ? order.split(':') : ['createdDate', 'DESC']],
+        attributes: (fields !== '*' && fields != null) ? fields.split(',') : null,
+        limit: (!isNaN(limit)) ? limit : null,
+        offset: (!isNan(offset)) ? offset : null,
+        include: [{
+          model: models.Comment,
+          attributes: ['content', 'postId', 'userId', 'commentId']
+        }]
+      })
+      .then(function(comments){
+        if (comments){
+          res.status(200).json(comments);
+        }else{
+          res.status(404).json({'error':'no comments found'});
+        }
+      })
+      .catch(function(err){
+        res.status(500).json({'error':'invalid fields'});
+      });
+    }else{
+      //Get with search
+    }
   }
 }

@@ -20,7 +20,7 @@ module.exports = {
           done(newPost);
         })
         .catch(function(err){
-          return res.status(500).json('error':'cannot add post');
+          return res.status(500).json({'error':'cannot add post'});
         })
       }
     ], function(err){
@@ -41,10 +41,10 @@ module.exports = {
 
     asyncLib.waterfall([
       function(done){
-        models.Post.findOne([
+        models.Post.findOne({
           attributes: ['id'],
           where: {id: postId}
-        ])
+        })
         .then(function(post){
           done(null, post);
         })
@@ -108,5 +108,38 @@ module.exports = {
         return res.status(500).json({'error':'cannot update post'});
       }
     })
+  },
+
+  getPosts: function(req, res){
+    var fields = req.query.fields;
+    var limit = parseInt(req.query.limit);
+    var offset = parseInt(req.query.offset);
+    var order = req.query.order;
+    var search = req.query.search;
+
+    if (search == null){
+      models.Post.findAll({
+        order: [(order != null) ? order.split(':') : ['createdDate', 'DESC']],
+        attributes: (fields !== '*' && fields != null) ? fields.split(',') : null,
+        limit: (!isNaN(limit)) ? limit : null,
+        offset: (!isNan(offset)) ? offset : null,
+        include: [{
+          model: models.Post,
+          attributes: ['content', 'postId', 'userId']
+        }]
+      })
+      .then(function(posts){
+        if (posts){
+          res.status(200).json(posts);
+        }else{
+          res.status(404).json({'error':'no posts found'});
+        }
+      })
+      .catch(function(err){
+        res.status(500).json({'error':'invalid fields'});
+      });
+    }else{
+      //Get with search
+    }
   }
 }

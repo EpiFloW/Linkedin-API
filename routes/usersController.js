@@ -183,5 +183,38 @@ module.exports = {
           return res.status(500).json({'error':'cannot update user profile'});
         }
       });
+  },
+
+  getUsers: function(req, res){
+    var fields = req.query.fields;
+    var limit = parseInt(req.query.limit);
+    var offset = parseInt(req.query.offset);
+    var order = req.query.order;
+    var search = req.query.search;
+
+    if (search == null){
+      models.User.findAll({
+        order: [(order != null) ? order.split(':') : ['name', 'ASC']],
+        attributes: (fields !== '*' && fields != null) ? fields.split(',') : null,
+        limit: (!isNaN(limit)) ? limit : null,
+        offset: (!isNan(offset)) ? offset : null,
+        include: [{
+          model: models.User,
+          attributes: ['name']
+        }]
+      })
+      .then(function(users){
+        if (users){
+          res.status(200).json(users);
+        }else{
+          res.status(404).json({'error':'no users found'});
+        }
+      })
+      .catch(function(err){
+        res.status(500).json({'error':'invalid fields'});
+      });
+    }else{
+      //Get with search
+    }
   }
 }
