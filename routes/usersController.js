@@ -6,70 +6,65 @@ var asyncLib  = require('async');
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 module.exports = {
-  register: function(req, res){
-    var isAdmin = req.body.isAdmin;
-    var isBanned = req.body.isBanned;
-    var email = req.body.email;
-    var name = req.body.name;
-    var surname = req.body.surname;
-    var age = req.body.age;
-    var profilePicture = req.body.profilePicture;
-    var country = req.body.country;
-    var password = req.body.password;
+  register: function(req, res) {
 
-    if (email == null || name == null || surname == null || password == null){
-      return res.status(400).json({'error':'missing parameters'});
+    var email     = req.body.email;
+    var name      = req.body.name;
+    var surname   = req.body.surname
+    var password  = req.body.password;
+
+    if (email == null || name == null || surname == null || password == null) {
+      return res.status(400).json({ 'error': 'missing parameters' });
     }
-    if (!EMAIL_REGEX.test(email)){
-      return res.status(400).json({'error':'email is not valid'});
+    if (!EMAIL_REGEX.test(email)) {
+      return res.status(400).json({ 'error': 'email is not valid' });
     }
 
     asyncLib.waterfall([
-      function(done){
+      function(done) {
         models.User.findOne({
-          attributes: ['email'],
-          where: {email: email}
+          attributes: ['Email'],
+          where: { Email: email }
         })
-        .then(function(userFound){
+        .then(function(userFound) {
           done(null, userFound);
         })
-        .catch(function(err){
-          return res.status(500).json({'error':'unable to verify user'});
+        .catch(function(err) {
+          return res.status(500).json({ 'error': 'unable to verify user' });
         });
       },
-      function(userFound, done){
-        if (!userFound){
-          bcrypt.hash(password, 5, function(err, bcryptedPassword){
+      function(userFound, done) {
+        if (!userFound) {
+          bcrypt.hash(password, 5, function( err, bcryptedPassword ) {
             done(null, userFound, bcryptedPassword);
           });
-        }else{
-          return res.status(409).json({'error':'user already exist'});
+        } else {
+          return res.status(409).json({ 'error': 'user already exist' });
         }
       },
-      function(userFound, bcryptedPassword, done){
+      function(userFound, bcryptedPassword, done) {
         var newUser = models.User.create({
-          isAdmin: 0,
+          Email: email,
+          Name: name,
+          Surname: surname,
+          Password: bcryptedPassword,
           isBanned: 0,
-          email: email,
-          name: name,
-          surname: surname,
-          age: age,
-          profilePicture: profilePicture,
-          country: country,
-          password: bcryptedPassword
+          isAdmin: 0
         })
-        .then(function(newUser){
+        .then(function(newUser) {
           done(newUser);
         })
-        .catch(function(err){
-          return res.status(500).json({'error':'cannot add user'});
-        })
+        .catch(function(err) {
+          return res.status(500).json({ 'error': 'cannot add user' });
+        });
       }
-    ], function(err){
-      if (!err){
-        return res.status(200).json({'msg':'ok'});
-      }else{
-        return res.status(404).json({'error':'error'});
+    ], function(newUser) {
+      if (newUser) {
+        return res.status(201).json({
+          'id': newUser.id
+        });
+      } else {
+        return res.status(500).json({ 'error': 'cannot add user' });
       }
     });
   },

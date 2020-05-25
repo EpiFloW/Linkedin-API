@@ -8,10 +8,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      UserId: {
-        allowNull: false,
-        type: Sequelize.INTEGER
-      },
       isAdmin: {
         allowNull: false,
         type: Sequelize.BOOLEAN
@@ -37,6 +33,10 @@ module.exports = {
         type: Sequelize.STRING
       },
       Country: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
+      Email: {
         allowNull: true,
         type: Sequelize.STRING
       },
