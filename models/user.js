@@ -3,13 +3,13 @@ module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     isAdmin: DataTypes.BOOLEAN,
     isBanned: DataTypes.BOOLEAN,
-    Name: DataTypes.STRING,
-    Surname: DataTypes.STRING,
-    Age: DataTypes.INTEGER,
-    ProfilePicture: DataTypes.STRING,
-    Country: DataTypes.STRING,
-    Email: DataTypes.STRING,
-    Password: DataTypes.STRING
+    name: DataTypes.STRING,
+    surname: DataTypes.STRING,
+    age: DataTypes.INTEGER,
+    profilePicture: DataTypes.STRING,
+    country: DataTypes.STRING,
+    email: DataTypes.STRING,
+    password: DataTypes.STRING
   }, {});
   User.associate = function(models) {
     models.User.hasMany(models.Post);

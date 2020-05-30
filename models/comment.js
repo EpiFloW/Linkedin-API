@@ -1,10 +1,10 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Comment = sequelize.define('Comment', {
-    CommentId: DataTypes.INTEGER,
-    Content: DataTypes.STRING,
-    PostId: DataTypes.INTEGER,
-    UserId: DataTypes.INTEGER
+    commentId: DataTypes.INTEGER,
+    content: DataTypes.STRING,
+    postId: DataTypes.INTEGER,
+    userId: DataTypes.INTEGER
   }, {});
   Comment.associate = function(models) {
     models.Comment.belongsTo(models.Post, {

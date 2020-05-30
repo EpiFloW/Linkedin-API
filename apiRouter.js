@@ -13,7 +13,7 @@ exports.router = (function(){
 
   // Users
   apiRouter.route('/users/register').post(usersController.register);
-  apiRouter.route('/users/login').post(usersController.login);
+  apiRouter.route('/users/login').get(usersController.login);
   apiRouter.route('/users/get').get(usersController.getUserProfile);
   apiRouter.route('/users/update').put(usersController.updateUserProfile);
   apiRouter.route('/users/list').get(usersController.getUsers);

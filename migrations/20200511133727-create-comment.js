@@ -8,19 +8,19 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      CommentId: {
+      commentId: {
         allowNull: false,
         type: Sequelize.INTEGER
       },
-      Content: {
+      content: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      PostId: {
+      postId: {
         allowNull: false,
         type: Sequelize.INTEGER
       },
-      UserId: {
+      userId: {
         allowNull: false,
         type: Sequelize.INTEGER
       },

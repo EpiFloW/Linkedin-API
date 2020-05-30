@@ -16,31 +16,31 @@ module.exports = {
         allowNull: false,
         type: Sequelize.BOOLEAN
       },
-      Name: {
+      name: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      Surname: {
+      surname: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      Age: {
+      age: {
         allowNull: true,
         type: Sequelize.INTEGER
       },
-      ProfilePicture: {
+      profilePicture: {
         allowNull: true,
         type: Sequelize.STRING
       },
-      Country: {
+      country: {
         allowNull: true,
         type: Sequelize.STRING
       },
-      Email: {
+      email: {
         allowNull: true,
         type: Sequelize.STRING
       },
-      Password: {
+      password: {
         allowNull: false,
         type: Sequelize.STRING
       },

@@ -8,11 +8,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      OrganisationId: {
+      organisationId: {
         allowNull: false,
         type: Sequelize.INTEGER
       },
-      UserId: {
+      userId: {
         allowNull: false,
         type: Sequelize.INTEGER
       },

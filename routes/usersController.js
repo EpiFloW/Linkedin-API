@@ -23,8 +23,8 @@ module.exports = {
     asyncLib.waterfall([
       function(done) {
         models.User.findOne({
-          attributes: ['Email'],
-          where: { Email: email }
+          attributes: ['email'],
+          where: { email: email }
         })
         .then(function(userFound) {
           done(null, userFound);
@@ -44,10 +44,10 @@ module.exports = {
       },
       function(userFound, bcryptedPassword, done) {
         var newUser = models.User.create({
-          Email: email,
-          Name: name,
-          Surname: surname,
-          Password: bcryptedPassword,
+          email: email,
+          name: name,
+          surname: surname,
+          password: bcryptedPassword,
           isBanned: 0,
           isAdmin: 0
         })
@@ -71,7 +71,7 @@ module.exports = {
 
   login: function(req, res){
     var email = req.body.email;
-    var pasword = req.body.password;
+    var password = req.body.password;
 
     if (email == null || password == null){
       return res.status(400).json({'error':'missing parameters'});

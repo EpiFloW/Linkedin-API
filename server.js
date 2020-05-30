@@ -5,6 +5,15 @@ var server = express();
 
 server.use(bodyParser.urlencoded({ extended: true}));
 server.use(bodyParser.json());
+server.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+    server.options('*', (req, res) => {
+        res.header('Access-Control-Allow-Methods', 'GET, PATCH, PUT, POST, DELETE, OPTIONS');
+        res.send();
+    });
+});
 
 server.get('/', function (req, res) {
   res.setHeader('Content-Type', 'text/html');

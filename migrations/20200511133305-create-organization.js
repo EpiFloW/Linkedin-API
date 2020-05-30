@@ -8,19 +8,19 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      OrganizationId: {
+      organizationId: {
         allowNull: false,
         type: Sequelize.INTEGER
       },
-      Count: {
+      count: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      Sector: {
+      sector: {
         allowNull: true,
         type: Sequelize.STRING
       },
-      Name: {
+      name: {
         allowNull: false,
         type: Sequelize.STRING
       },

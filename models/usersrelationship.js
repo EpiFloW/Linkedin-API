@@ -1,10 +1,10 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const UsersRelationship = sequelize.define('UsersRelationship', {
-    UserId1: DataTypes.INTEGER,
-    UserId2: DataTypes.INTEGER,
-    WaitingUser1: DataTypes.BOOLEAN,
-    WaitingUser2: DataTypes.BOOLEAN
+    userId1: DataTypes.INTEGER,
+    userId2: DataTypes.INTEGER,
+    waitingUser1: DataTypes.BOOLEAN,
+    waitingUser2: DataTypes.BOOLEAN
   }, {});
   UsersRelationship.associate = function(models) {
     // associations can be defined here

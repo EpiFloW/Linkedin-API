@@ -8,19 +8,19 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      SchoolId: {
+      schoolId: {
         allowNull: false,
         type: Sequelize.INTEGER
       },
-      Country: {
+      country: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      Sector: {
+      sector: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      Name: {
+      name: {
         allowNull: false,
         type: Sequelize.STRING
       },

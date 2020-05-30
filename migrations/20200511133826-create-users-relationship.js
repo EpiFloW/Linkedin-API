@@ -8,19 +8,19 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      UserId1: {
+      userId1: {
         allowNull: false,
         type: Sequelize.INTEGER
       },
-      UserId2: {
+      userId2: {
         allowNull: false,
         type: Sequelize.INTEGER
       },
-      WaitingUser1: {
+      waitingUser1: {
         allowNull: false,
         type: Sequelize.BOOLEAN
       },
-      WaitingUser2: {
+      waitingUser2: {
         allowNull: false,
         type: Sequelize.BOOLEAN
       },
