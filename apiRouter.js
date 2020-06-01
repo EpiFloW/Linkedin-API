@@ -25,7 +25,7 @@ exports.router = (function(){
   apiRouter.route('posts/list').get(postsController.getPosts);
 
   // Comments
-  apiRouter.route('/comments/create').post(commentsController.create);
+  apiRouter.route('/comments/register').post(commentsController.create);
   apiRouter.route('/comments/delete').delete(commentsController.delete);
   apiRouter.route('/comments/edit').put(commentsController.edit);
   apiRouter.route('/comments/list').get(commentsController.getComments);

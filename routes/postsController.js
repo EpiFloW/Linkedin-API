@@ -2,7 +2,7 @@ var models    = require('../models');
 var asyncLib  = require('async');
 
 module.exports = {
-  create: function(req, res){
+  create: function(req, res) {
     var userId = req.body.userId;
     var content = req.body.content;
 
