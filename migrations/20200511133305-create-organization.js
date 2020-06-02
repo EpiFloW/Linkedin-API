@@ -8,10 +8,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      organizationId: {
-        allowNull: false,
-        type: Sequelize.INTEGER
-      },
       count: {
         allowNull: false,
         type: Sequelize.STRING

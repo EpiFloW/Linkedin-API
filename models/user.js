@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   User.associate = function(models) {
     models.User.hasMany(models.Post);
+    models.User.hasMany(models.Comment);
     models.User.hasMany(models.UsersRelationship);
     models.User.hasMany(models.OrganizationsRelationship);
     models.User.hasMany(models.SchoolsRelationship);

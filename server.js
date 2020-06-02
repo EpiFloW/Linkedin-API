@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var apiRouter = require('./apiRouter').router;
 var server = express();
+var db = require('./models')
 
 server.use(bodyParser.urlencoded({ extended: true}));
 server.use(bodyParser.json());
@@ -22,6 +23,8 @@ server.get('/', function (req, res) {
 
 server.use('/api/', apiRouter);
 
-server.listen(8080, function() {
-  console.log('Server start');
-});
+db.sequelize.sync({force: true}).then(function(){
+  server.listen(8080, function() {
+    console.log('Server start');
+  });
+})

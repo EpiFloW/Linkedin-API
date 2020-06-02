@@ -1,9 +1,11 @@
 var models    = require('../models');
 var asyncLib  = require('async');
+var jwtUtils = require('../utils/jwt.utils');
 
 module.exports = {
   create: function(req, res) {
-    var userId = req.body.userId;
+    var headerAuth  = req.headers['authorization'];
+    var userId = jwtUtils.getUserId(headerAuth);
     var content = req.body.content;
 
     if (userId == null || content == null){
@@ -11,23 +13,35 @@ module.exports = {
     }
 
     asyncLib.waterfall([
-      function (done){
-        var newPost = models.Post.create({
-          userId: userId,
-          content: content
+      function(done) {
+        models.User.findOne({
+          where: { id: userId }
         })
-        .this(function(newPost){
-          done(newPost);
+        .then(function(userFound) {
+          done(null, userFound);
         })
-        .catch(function(err){
-          return res.status(500).json({'error':'cannot add post'});
-        })
-      }
-    ], function(err){
-      if (!err){
-        return res.status(200).json({'msg':'ok'});
+        .catch(function(err) {
+          return res.status(500).json({ 'error': 'unable to verify user' });
+        });
+      },
+      function(userFound, done) {
+        if(userFound) {
+          models.Post.create({
+            content: content,
+            UserId: userFound.id
+          })
+          .then(function(newPost) {
+            done(newPost);
+          });
+        } else {
+          res.status(404).json({ 'error': 'user not found' });
+        }
+      },
+    ], function(newPost){
+      if (newPost){
+        return res.status(200).json({'id':newPost.id});
       }else{
-        return res.status(404).json({'error':'error'});
+        return res.status(404).json({'error':'cannot add user'});
       }
     });
   },

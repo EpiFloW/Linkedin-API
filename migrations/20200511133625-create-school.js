@@ -8,10 +8,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      schoolId: {
-        allowNull: false,
-        type: Sequelize.INTEGER
-      },
       country: {
         allowNull: false,
         type: Sequelize.STRING
