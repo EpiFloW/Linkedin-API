@@ -15,8 +15,8 @@ exports.router = (function(){
   apiRouter.route('/users/register').post(usersController.register);
   apiRouter.route('/users/login').get(usersController.login);
   apiRouter.route('/users/get').get(usersController.getUserProfile);
-  apiRouter.route('/users/update').put(usersController.updateUserProfile);
-  apiRouter.route('/users/list').get(usersController.getUsers);
+  /* AR */ apiRouter.route('/users/update').put(usersController.updateUserProfile);
+  /* AR */ apiRouter.route('/users/list').get(usersController.getUsers);
 
   // Posts
   apiRouter.route('/posts/create').post(postsController.create);

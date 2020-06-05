@@ -191,12 +191,8 @@ module.exports = {
       models.User.findAll({
         order: [(order != null) ? order.split(':') : ['name', 'ASC']],
         attributes: (fields !== '*' && fields != null) ? fields.split(',') : null,
-        limit: (!isNaN(limit)) ? limit : null,
-        offset: (!isNan(offset)) ? offset : null,
-        include: [{
-          model: models.User,
-          attributes: ['name']
-        }]
+        //limit: (limit != null) ? limit : null,
+        //offset: (offset != null) ? offset : null,
       })
       .then(function(users){
         if (users){
