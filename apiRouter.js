@@ -14,41 +14,41 @@ exports.router = (function(){
   // Users
   apiRouter.route('/users/register').post(usersController.register);
   apiRouter.route('/users/login').get(usersController.login);
-  apiRouter.route('/users/get').get(usersController.getUserProfile);
-  /* AR */ apiRouter.route('/users/update').put(usersController.updateUserProfile);
-  /* AR */ apiRouter.route('/users/list').get(usersController.getUsers);
+  apiRouter.route('/users/getCurrentUser').get(usersController.getUserProfile);
+  apiRouter.route('/users/update').put(usersController.updateUserProfile);
+  apiRouter.route('/users/get').get(usersController.getUsers);
 
   // Posts
   apiRouter.route('/posts/create').post(postsController.create);
-  apiRouter.route('/posts/delete').delete(postsController.delete);
+  /* AR */ apiRouter.route('/posts/delete').delete(postsController.delete);
   apiRouter.route('/posts/edit').put(postsController.edit);
-  apiRouter.route('posts/list').get(postsController.getPosts);
+  apiRouter.route('/posts/get').get(postsController.getPosts);
 
   // Comments
-  apiRouter.route('/comments/register').post(commentsController.create);
-  apiRouter.route('/comments/delete').delete(commentsController.delete);
-  apiRouter.route('/comments/edit').put(commentsController.edit);
-  apiRouter.route('/comments/list').get(commentsController.getComments);
+  /*AR*/apiRouter.route('/comments/create').post(commentsController.create);
+  /*AR*/apiRouter.route('/comments/delete').delete(commentsController.delete);
+  /*AR*/apiRouter.route('/comments/edit').put(commentsController.edit);
+  /*AR*/apiRouter.route('/comments/get').get(commentsController.getComments);
 
   // Schools
-  apiRouter.route('/schools/create').post(schoolsController.create);
-  apiRouter.route('/schools/delete').delete(schoolsController.delete);
-  apiRouter.route('/schools/list').get(schoolsController.getSchools);
+  /*AR*/apiRouter.route('/schools/create').post(schoolsController.create);
+  /*AR*/apiRouter.route('/schools/delete').delete(schoolsController.delete);
+  /*AR*/apiRouter.route('/schools/list').get(schoolsController.getSchools);
 
   // Organizations
-  apiRouter.route('/organizations/create').post(organizationsController.create);
-  apiRouter.route('/organizations/delete').delete(organizationsController.delete);
-  apiRouter.route('/organizations/list').get(organizationsController.getOrganizations);
+  /*AR*/apiRouter.route('/organizations/create').post(organizationsController.create);
+  /*AR*/apiRouter.route('/organizations/delete').delete(organizationsController.delete);
+  /*AR*/apiRouter.route('/organizations/list').get(organizationsController.getOrganizations);
 
   // OrganizationsRelationship
-  apiRouter.route('/organizations/createLink').post(organizationsRelationshipController.create);
-  apiRouter.route('/organizations/deletelink').delete(organizationsRelationshipController.delete);
+  /*AR*/apiRouter.route('/organizations/createLink').post(organizationsRelationshipController.create);
+  /*AR*/apiRouter.route('/organizations/deletelink').delete(organizationsRelationshipController.delete);
   //apiRouter.route('/organizations/getlinksorganization').get();
   //apiRouter.route('/organizations/getlinksuser').get();
 
   // SchoolsRelationship
-  apiRouter.route('/schools/createLink').post(schoolsRelationshipController.create);
-  apiRouter.route('/schools/deletelink').delete(schoolsRelationshipController.delete);
+  /*AR*/apiRouter.route('/schools/createLink').post(schoolsRelationshipController.create);
+  /*AR*/apiRouter.route('/schools/deletelink').delete(schoolsRelationshipController.delete);
   //apiRouter.route('/schools/getlinksschool').get();
   //apiRouter.route('/schools/getlinksuser').get();
 

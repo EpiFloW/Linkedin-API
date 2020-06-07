@@ -91,8 +91,8 @@ module.exports = {
     asyncLib.waterfall([
       function(done){
         models.Post.findOne({
-          attributes: ['postId', 'content'],
-          where: {postId: postId}
+          attributes: ['id', 'content'],
+          where: {id: postId}
         })
         .then(function(post){
           done(null, post);
@@ -126,21 +126,13 @@ module.exports = {
 
   getPosts: function(req, res){
     var fields = req.query.fields;
-    var limit = parseInt(req.query.limit);
-    var offset = parseInt(req.query.offset);
     var order = req.query.order;
-    var search = req.query.search;
+    var userId = req.query.userId;
 
-    if (search == null){
+    if (userId == null){
       models.Post.findAll({
-        order: [(order != null) ? order.split(':') : ['createdDate', 'DESC']],
+        order: [(order != null) ? order.split(':') : ['createdAt', 'DESC']],
         attributes: (fields !== '*' && fields != null) ? fields.split(',') : null,
-        limit: (!isNaN(limit)) ? limit : null,
-        offset: (!isNan(offset)) ? offset : null,
-        include: [{
-          model: models.Post,
-          attributes: ['content', 'postId', 'userId']
-        }]
       })
       .then(function(posts){
         if (posts){
@@ -153,7 +145,21 @@ module.exports = {
         res.status(500).json({'error':'invalid fields'});
       });
     }else{
-      //Get with search
+      models.Post.findAll({
+        order: [(order != null) ? order.split(':') : ['createdAt', 'DESC']],
+        attributes: (fields !== '*' && fields != null) ? fields.split(',') : null,
+        where: {UserId: userId}
+      })
+      .then(function(posts){
+        if(posts){
+          res.status(200).json(posts);
+        }else{
+          res.status(404).json({'error':'no posts found'});
+        }
+      })
+      .catch(function(err){
+        res.status(500).json({'error':'invalid fields'});
+      })
     }
   }
 }

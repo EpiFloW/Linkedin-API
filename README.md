@@ -40,9 +40,9 @@ sequelize db:migrate
 
 # API Documentation
 
-### Users
+### User
 ```text
-register :
+register (/users/register) :
   params :  isAdmin (boolean)
             isBanned (boolean)
             email (string)
@@ -53,24 +53,70 @@ register :
             country (string)
             password (string)
 
-login :
+  return : userId
+
+
+login (/users/login) :
   params :  email (string)
             password (string)
 
-getUserProfile
+  return : userId
+           Bearer token
 
-updateUserProfile
+
+getUserProfile (/users/getCurrentUser):
+  headers : Autorization : Bearer {token}
+            Content-Type : application/x-www-form-urlencoded
+
+  return : current User
+
+updateUserProfile (/users/update) :
+  headers : Autorization : Bearer {token}
+            Content-Type : application/x-www-form-urlencoded
+
+  params : country (string)
+
+  return : user updated
+
+
+getUsers (/users/get) :
+  params : fields (string)
+           order (string)
+           userId (integer)
+
+  return : user
 ```
 
-### Posts
+### Post
 ```text
+create (/posts/create) :
+  headers : Autorization : Bearer {token}
+            Content-Type : application/x-www-form-urlencoded
+
+  params : content (string)
+
+  return : ppost id
+
+edit (/posts/edit) :
+  params : postId (integer)
+           content (string)
+
+  return : post
+
+getPosts (/posts/get) :
+  params : fields (string)
+           order (string)
+           userId (integer)
+
+  return : post
+
 ```
 
-### Comments
+### Comment
 ```text
-create :
-  params :  postId (string)
-            userId (string)
+create (/comments/create) :
+  params :  postId (integer)
+            userId (integer)
             content (string)
 
 delete :
@@ -81,15 +127,15 @@ edit :
             content (string)
 ```
 
-### Schools
+### School
+```text
+```
+
+### Organization
 ```text
 ```
 
 ### OrganizationsRelationship
-```text
-```
-
-### SchoolsRelationship
 ```text
 ```
 

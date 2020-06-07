@@ -12,10 +12,32 @@ module.exports = {
     }
 
     asyncLib.waterfall([
-      function(done){
+      function(done) {
+        models.User.findOne({
+          where: { id: userId }
+        })
+        .then(function(userFound) {
+          done(null, userFound);
+        })
+        .catch(function(err) {
+          return res.status(500).json({ 'error': 'unable to verify user' });
+        });
+      },
+      function(userFound, done) {
+        models.Post.findOne({
+          where: { id: postId }
+        })
+        .then(function(postFound, userFound) {
+          done(null, userFound, postFound);
+        })
+        .catch(function(err) {
+          return res.status(500).json({'error':'unable to verify post'});
+        })
+      },
+      function(userFound, postFound, done){
         var newComment = models.Comment.create({
-          postId: postId,
-          userId: userId,
+          PostId: postFound.id,
+          UserId: userFound.id,
           content: content
         })
         .this(function(newComment){

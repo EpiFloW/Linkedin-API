@@ -138,7 +138,7 @@ module.exports = {
     },
 
     updateUserProfile: function(req, res){
-      var headerAuth = req.header['authorization'];
+      var headerAuth = req.headers['authorization'];
       var userId = jwtUtils.getUserId(headerAuth);
 
       var country = req.body.country;
@@ -185,14 +185,12 @@ module.exports = {
     var limit = parseInt(req.query.limit);
     var offset = parseInt(req.query.offset);
     var order = req.query.order;
-    var search = req.query.search;
+    var userId = req.query.userId;
 
-    if (search == null){
+    if (userId == null){
       models.User.findAll({
         order: [(order != null) ? order.split(':') : ['name', 'ASC']],
         attributes: (fields !== '*' && fields != null) ? fields.split(',') : null,
-        //limit: (limit != null) ? limit : null,
-        //offset: (offset != null) ? offset : null,
       })
       .then(function(users){
         if (users){
@@ -205,7 +203,21 @@ module.exports = {
         res.status(500).json({'error':'invalid fields'});
       });
     }else{
-      //Get with search
+      models.User.findOne({
+        order: [(order != null) ? order.split(':') : ['name', 'ASC']],
+        attributes: (fields !== '*' && fields != null) ? fields.split(',') : null,
+        where: {id: userId}
+      })
+      .then(function(user){
+        if (user){
+          res.status(200).json(user);
+        }else{
+          res.status(404).json({'error':'no user found'});
+        }
+      })
+      .catch(function(err){
+        res.status(500).json({'error':'invalid fields'});
+      });
     }
   }
 }

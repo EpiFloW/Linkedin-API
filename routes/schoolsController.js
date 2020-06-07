@@ -1,8 +1,11 @@
 var models    = require('../models');
 var asyncLib  = require('async');
+var jwtUtils = require('../utils/jwt.utils');
 
 module.exports = {
-  create: function(req, res){
+  create: function(req, res) {
+    var headerAuth  = req.headers['authorization'];
+    var userId = jwtUtils.getUserId(headerAuth);
     var country = req.body.country;
     var sector = req.body.sector;
     var name = req.body.name;
@@ -14,7 +17,7 @@ module.exports = {
     asyncLib.waterfall([
       function(done){
         var newSchool = models.School.create({
-          coutry: country,
+          country: country,
           sector: sector,
           name: name
         })
@@ -25,11 +28,13 @@ module.exports = {
           return res.status(500).json({'error':'cannot add school'});
         })
       }
-    ], function(err){
-      if (!err){
-        return res.status(200).json({'msg':'ok'});
+    ], function(newSchool){
+      if (newSchool){
+        return res.status(201).json({
+          'id':newSchool.id
+        });
       }else{
-        return res.status(404).json({'error':'error'});
+        return res.status(404).json({'error':'cannot add school'});
       }
     });
   },
